@@ -1,7 +1,7 @@
 const express = require("express");
-const { addFeedback, getFeedbacks } = require("../../models/feedbacks");
 const { requestError } = require("../../helpers");
 const Joi = require("joi");
+const { connectMongo } = require("../../db/connection");
 
 const router = express.Router();
 
@@ -13,8 +13,9 @@ const addSchema = Joi.object({
 
 router.get("/", async (req, res, next) => {
   try {
-    const result = await getFeedbacks();
-    return res.status(201).json({ result });
+    const { Feedbacks } = await connectMongo();
+    const result = await Feedbacks.find({}).toArray();
+    return res.status(201).json(result);
   } catch (error) {
     next(error);
   }
@@ -27,8 +28,9 @@ router.post("/", async (req, res, next) => {
       throw requestError(400, error.message);
     }
     const feedback = req.body;
-    const result = await addFeedback(feedback);
-    return res.status(201).json({ result });
+    const { Feedbacks } = await connectMongo();
+    const result = await Feedbacks.insertOne(feedback);
+    return res.status(201).json(result);
   } catch (error) {
     next(error);
   }
