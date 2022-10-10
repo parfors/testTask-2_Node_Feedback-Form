@@ -1,9 +1,6 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const MongoClient = require("mongodb").MongoClient;
-const MongoURL =
-  "mongodb+srv://parfors:papa9335@myclaster.00hwlbs.mongodb.net/test_tusk?retryWrites=true&w=majority";
 const { connectMongo } = require("./db/connection");
 const feedbackRouter = require("./routes/api/feedbacks");
 
@@ -28,12 +25,9 @@ const PORT = 8081;
 const start = async () => {
   connectMongo();
 
-
   app.listen(8081, () => {
     console.log(`Server running at port ${PORT}`);
   });
 };
 
 start();
-
-module.exports = app;
