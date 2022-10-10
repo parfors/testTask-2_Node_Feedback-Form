@@ -3,6 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const { connectMongo } = require("./db/connection");
 const feedbackRouter = require("./routes/api/feedbacks");
+require("dotenv").config();
 
 const app = express();
 
@@ -20,12 +21,12 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 
-const PORT = 8081;
+const PORT = process.env.PORT;
 
 const start = async () => {
   connectMongo();
 
-  app.listen(8081, () => {
+  app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}`);
   });
 };
