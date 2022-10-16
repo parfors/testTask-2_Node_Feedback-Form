@@ -1,39 +1,15 @@
 const express = require("express");
-const { requestError } = require("../../helpers");
-const Joi = require("joi");
-const { connectMongo } = require("../../db/connection");
+const { ctrlWrapper } = require("../../helpers");
+const ctrl = require("../../controllers/feedbacks");
+const { validateBody } = require("../../middleWares");
+const {
+  schemas: { addSchema },
+} = require("../../models/feedbacks");
 
 const router = express.Router();
 
-const addSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  feedback: Joi.string().required(),
-});
+router.get("/", ctrlWrapper(ctrl.getAll));
 
-router.get("/", async (req, res, next) => {
-  try {
-    const { Feedbacks } = await connectMongo();
-    const result = await Feedbacks.find({}).toArray();
-    return res.status(201).json(result);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/", async (req, res, next) => {
-  try {
-    const { error } = addSchema.validate(req.body);
-    if (error) {
-      throw requestError(400, error.message);
-    }
-    const feedback = req.body;
-    const { Feedbacks } = await connectMongo();
-    const result = await Feedbacks.insertOne(feedback);
-    return res.status(201).json(result);
-  } catch (error) {
-    next(error);
-  }
-});
+router.post("/", validateBody(addSchema), ctrlWrapper(ctrl.add));
 
 module.exports = router;

@@ -1,7 +1,6 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const { connectMongo } = require("./db/connection");
 const feedbackRouter = require("./routes/api/feedbacks");
 require("dotenv").config();
 
@@ -21,14 +20,4 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 
-const PORT = process.env.PORT;
-
-const start = async () => {
-  connectMongo();
-
-  app.listen(PORT, () => {
-    console.log(`Server running at port ${PORT}`);
-  });
-};
-
-start();
+module.exports = { app };
