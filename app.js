@@ -2,13 +2,19 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const feedbackRouter = require("./routes/api/feedbacks");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
 
 app.use(logger("tiny"));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "frontEnd/build")));
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontEnd/build", "index.html"));
+});
 
 app.use("/api/feedbacks", feedbackRouter);
 app.use((req, res) => {
