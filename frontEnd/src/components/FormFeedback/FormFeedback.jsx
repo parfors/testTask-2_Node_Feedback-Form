@@ -88,8 +88,7 @@ export default function FormFeedback() {
             value={feedback}
           />
           <ButtonFormStyled type="submit">
-            {' '}
-            {loading ? 'Sending...' : 'Sand message'}
+            {loading ? 'Sending...' : 'Send message'}
           </ButtonFormStyled>
         </FormStyled>
       </FormWrapper>
