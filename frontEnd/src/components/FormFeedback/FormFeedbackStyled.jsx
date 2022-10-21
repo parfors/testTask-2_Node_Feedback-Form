@@ -38,7 +38,7 @@ export const FormStyled = styled.form`
 export const InputFormStyled = styled.input`
   padding-left: 46px;
   height: 93px;
-  width: 90%;
+  width: 100%;
   margin-bottom: 8px;
   font-size: ${p => p.theme.fontSizes.medium};
   font-family: regular;
@@ -56,7 +56,7 @@ export const InputFormStyled = styled.input`
 
 export const TextareaFormStyled = styled.textarea`
   height: 189px;
-  width: 90%;
+  width: 100%;
   padding-left: 46px;
   padding-top: 31px;
 

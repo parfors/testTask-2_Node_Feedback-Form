@@ -32,6 +32,7 @@ export const LinkList = styled.ul`
     & {
       margin-right: 70px;
       justify-content: flex-end;
+      margin-left: 10px;
     }
   }
 `;
